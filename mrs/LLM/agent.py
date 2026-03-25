@@ -11,7 +11,7 @@ AFFORDANCE_MAP = {
 class Agent(RobotBase):
     def __init__(self, llm: LLM):
         self.llm = llm
-        self.grabbed_object = None
+        self.remaining_count = None
         self.grabbed_object = None
 
     def get_observation(self):

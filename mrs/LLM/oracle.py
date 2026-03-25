@@ -1,11 +1,20 @@
+import backoff
+from openai import OpenAIError
+
 from mrs.LLM.base import RobotBase
 from mrs.LLM.LLM import LLM
 
 
 class Oracle(RobotBase):
-    def __init__(self, llm: LLM):
+    def __init__(self, llm: LLM, agent: list):
         self.llm = llm
         self.last_done = False
+        self.conversation_id = self._init_conversation()
+
+    @backoff.on_exception(backoff.expo, OpenAIError)
+    def _init_conversation(self):
+        conv = self.llm.client.conversations.create()
+        return conv.id
 
     def get_observation(self):
         return super().get_observation()

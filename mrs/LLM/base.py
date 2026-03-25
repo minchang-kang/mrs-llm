@@ -1,7 +1,8 @@
 
 class RobotBase:
-    def __init__(self, llm, camera):
+    def __init__(self, llm, agents, camera):
         self.llm = llm
+        self.agents = agents
         self.camera = camera
     
     def get_observation(self):
@@ -9,8 +10,5 @@ class RobotBase:
         # 공통 관측 로직
         raise NotImplementedError
     
-    def get_action(self):
-        raise NotImplementedError
-    
-    def run(self):
+    def step(self):
         raise NotImplementedError
