@@ -9,22 +9,31 @@ with open("config/config.yaml") as f:
 LLM_CFG = config["llm"]
 
 def main():
+    try:
+        llm = LLM(**LLM_CFG)
+
+        # agents = [
+        #     Agent(llm, camera1, agent_id=1),  # 로봇 팔 1
+        #     Agent(llm, camera2, agent_id=2),  # 로봇 팔 2
+        # ]
+
+        agents = [
+            Agent(llm, agent_id=1),
+            Agent(llm, agent_id=2),
+        ]
+
+        oracle = Oracle(llm, agents)
+    except RuntimeError as e:
+        print(e)
+
     task_goal = None
     saved_info = []
 
     success = False
-
-    llm = LLM(**LLM_CFG)
-    agents = [
-        Agent(llm, rtde_c1, camera1, agent_id=1),  # 로봇 팔 1
-        Agent(llm, rtde_c2, camera2, agent_id=2),  # 로봇 팔 2
-    ]
-
-    oracle = Oracle(llm)
-
     steps = 0
+
     while True:
-        success = oracle.step()
+        success, result = oracle.step()
 
         if success:
             break

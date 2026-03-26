@@ -9,8 +9,9 @@ AFFORDANCE_MAP = {
 }
 
 class Agent(RobotBase):
-    def __init__(self, llm: LLM):
+    def __init__(self, llm: LLM, agent_id: int):
         self.llm = llm
+        self.id = agent_id
         self.remaining_count = None
         self.grabbed_object = None
 

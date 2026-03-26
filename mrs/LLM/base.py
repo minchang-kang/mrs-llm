@@ -1,8 +1,7 @@
 
 class RobotBase:
-    def __init__(self, llm, agents, camera):
+    def __init__(self, llm, camera):
         self.llm = llm
-        self.agents = agents
         self.camera = camera
     
     def get_observation(self):
